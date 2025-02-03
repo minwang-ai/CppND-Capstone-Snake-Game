@@ -6,7 +6,11 @@ class Player {
 public:
     // constructor
     Player(std::string name)
-        : name_(name), score_(0), start_time_(std::chrono::system_clock::now()) {}
+        : name_(std::move(name)), 
+          score_(0), 
+          start_time_(std::chrono::system_clock::now()), 
+            end_time_(start_time_)
+          {}
     // setters and getters
     void SetScore(int score) { 
         score_ = score; 

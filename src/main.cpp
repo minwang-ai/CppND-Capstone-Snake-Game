@@ -4,14 +4,14 @@
 #include "renderer.h"
 #include "player.h"
 
-void CreatePlayer() {
+Player CreatePlayer() {
   std::string name;
   std::cout << "Please enter your name: ";
   std::getline(std::cin, name);
-  Player player_(name);
+  return Player(name);
 }
 
-void GameOver(){
+void GameOver(Player &player, const Game &game) {
   player.SetScore(game.GetScore());
 
   std::cout << "Game has terminated successfully!\n";
@@ -29,13 +29,13 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  CreatePlayer();
+  Player player = CreatePlayer();
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Game game(kGridWidth, kGridHeight);
   game.Run(controller, renderer, kMsPerFrame);
 
-  GameOver();
+  GameOver(player, game);
   return 0;
 }
