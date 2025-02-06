@@ -80,8 +80,8 @@ void Game::Update() {
 
   snake.Update();
 
-  int head_x = static_cast<int>(snake.head_x);
-  int head_y = static_cast<int>(snake.head_y);
+  int head_x = static_cast<int>(snake.GetHeadX());
+  int head_y = static_cast<int>(snake.GetHeadY());
 
   // Obstacle detection
   auto [obs_x, obs_y] = obstacle.GetPosition();

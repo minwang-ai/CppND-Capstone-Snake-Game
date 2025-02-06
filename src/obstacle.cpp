@@ -1,4 +1,5 @@
 #include "obstacle.h"
+#include <algorithm>  // for std::clamp 
 
 Obstacle::Obstacle(int x, int y, int grid_width, int grid_height, int speed)
     : x_(std::clamp(x, 0, grid_width - 1)),

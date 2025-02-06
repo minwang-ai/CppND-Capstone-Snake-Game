@@ -6,12 +6,15 @@ This is the Capstone project in the [Udacity C++ Nanodegree Program](https://www
 
 ## New Features
 
-1. **Player Name Input**
+1. **Player**
    - Enter player name before game starts
+   - Display player information after game over
+   - File: `player.h`
 
-2. **Moving Obstacle**
-   - Thread-safe obstacle movement
-   - Collision detection
+2. **Thread-safe Moving Obstacle**
+   - Moving obstacle that travels horizontally across the screen
+   - Game over when snake collides with obstacle
+   - File: `obstacle.h/cpp`
 
 ## Code Structure
 - `main.cpp`: Program entry, initializes game
@@ -20,7 +23,7 @@ This is the Capstone project in the [Udacity C++ Nanodegree Program](https://www
 - `renderer.h/cpp`: Game rendering
 - `snake.h/cpp`: Snake movement and growth
 - `obstacle.h/cpp`: Moving obstacle implementation
-- `player.h/cpp`: Player name and score management
+- `player.h/cpp`: Player info management
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
@@ -39,7 +42,7 @@ This is the Capstone project in the [Udacity C++ Nanodegree Program](https://www
 
 ## Basic Build Instructions
 
-1. Clone this repo.
+1. Clone this repo: `git clone <url>`
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./SnakeGame`.
@@ -62,46 +65,26 @@ This work is licensed under a
 
 ## Rubric Points Addressed
 
-### Loops, Functions, I/O (2/3 requirements)
-1. User Input Processing 
-   - Player name input implementation (`player.cpp`, lines 10-20)
-   - Keyboard control for snake movement (`controller.cpp`, lines 15-30)
+### Loops, Functions, I/O (meet 2 criteria)
+* functions and control structures.
+* accepts user input and processes the input (`main.cpp`, lines 7-12)
 
-2. Control Structures
-   - Obstacle movement patterns (`obstacle.cpp`, lines 30-50)
-   - Game state management (`game.cpp`, lines 40-60)
+### Object Oriented Programming (meet 3 criteria)
+* two classes are added to the project with appropriate access specifiers for class members (`obstacle.h/.cpp`, `player.h`)
+* Class constructors utilize member initialization lists (`obstacle.cpp`, lines 3-8, `player.h`, lines 7-13) 
+* Classes abstract implementation details from their interfaces.
 
-### Object Oriented Programming (3/5 requirements)
-1. Class Implementation
-   - Player class with proper access specifiers (`player.h`, lines 5-25)
-   - Obstacle class with encapsulated thread management (`obstacle.h`, lines 10-40)
 
-2. Constructor Initialization Lists
-   - Player constructor (`player.cpp`, lines 5-10)
-   - Obstacle constructor (`obstacle.cpp`, lines 8-15)
+### Memory Management (meet 4 criteria)
+* use references (`player.h`, lines 12, `game.cpp`, lines 97, `renderer.cpp`, lines 41).
+* use destructors appropriately (`obstacle.cpp`, lines 10)
+* use scope / Resource Acquisition Is Initialization (RAII) where appropriate (std::lock_guard).
+* use move semantics to move data instead of copying it, where possible (`player.h`, lines 9).
 
-3. Class Abstraction
-   - Thread-safe position management in Obstacle class
-   - Encapsulated player data in Player class
+### Concurrency (meet 2 criteria)
+* use multithreading
+   - Obstacle movement runs in separate thread (`obstacle.cpp`, lines 56)
+* use mutex and lock
+   - Position protection with mutex (`obstacle.cpp`, lines 22)
+   - Thread-safe position updates (`obstacle.cpp`, lines 37)
 
-### Memory Management (3/6 requirements)
-1. RAII Implementation
-   - Thread management in Obstacle class
-   - Mutex management for position updates
-
-2. Destructors
-   - Proper thread cleanup in Obstacle destructor (`obstacle.cpp`, lines 20-25)
-   - Resource cleanup in Game destructor
-
-3. References in Function Parameters
-   - Renderer function parameters (`renderer.cpp`, lines 30-35)
-   - Controller input handling (`controller.cpp`, lines 15-20)
-
-### Concurrency (2/4 requirements)
-1. Multithreading
-   - Obstacle movement runs in separate thread (`obstacle.cpp`, lines 40-60)
-   - Thread-safe position updates
-
-2. Mutex Usage
-   - Position protection with mutex (`obstacle.cpp`, lines 30-35)
-   - Thread synchronization in movement loop
