@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food) {
+void Renderer::Render(Snake const snake, SDL_Point const &food, Obstacle const &obstacle) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -70,6 +70,40 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
   SDL_RenderFillRect(sdl_renderer, &block);
+
+  // Render obstacle
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);  // Red color
+  auto [x, y] = obstacle.GetPosition();
+  block.x = x * block.w;
+  block.y = y * block.h;
+  SDL_RenderFillRect(sdl_renderer, &block);
+
+
+  // Render game over message if snake is dead
+    if (!snake.alive) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0x80);
+    SDL_Rect overlay{0, 0, static_cast<int>(screen_width), static_cast<int>(screen_height)};
+    SDL_RenderFillRect(sdl_renderer, &overlay);
+    
+    // Game Over text
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_Rect message{
+      static_cast<int>(screen_width/3),
+      static_cast<int>(screen_height/2 - 30),
+      static_cast<int>(screen_width/3),
+      60
+    };
+    SDL_RenderFillRect(sdl_renderer, &message);
+    
+    // Add "Press R to Restart" message
+    SDL_Rect restart_msg{
+      static_cast<int>(screen_width/3),
+      static_cast<int>(screen_height/2 + 40),
+      static_cast<int>(screen_width/3),
+      30
+    };
+    SDL_RenderFillRect(sdl_renderer, &restart_msg);
+  }
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
